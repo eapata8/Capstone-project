@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Ensure you're using Link from react-router-dom for navigation
+import { Link } from 'react-router-dom'; 
 
 const Navbar = () => {
   return (
