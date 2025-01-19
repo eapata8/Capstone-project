@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import './App.css'
+import Navbar from './components/Navbar'
 
 function App() {
 
@@ -7,6 +8,7 @@ function App() {
     <>
       <h1>Hello developpers!</h1>
       <Outlet/>
+      <Navbar/>
     </>
   )
 }
