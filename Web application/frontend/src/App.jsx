@@ -6,9 +6,9 @@ function App() {
 
   return (
     <>
-      <h1>Hello developpers!</h1>
-      <Outlet/>
       <Navbar/>
+      <Outlet/>
+     
     </>
   )
 }
