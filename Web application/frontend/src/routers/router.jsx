@@ -3,6 +3,7 @@ import App from "../App";
 import Home from "../pages/home/home";
 import CategoryPage from "../pages/category/CategoryPage";
 import Search from "../pages/search/Search";
+import SingleProduct from "../pages/shop/SingleProduct";
 
 
 const router =createBrowserRouter([
@@ -20,8 +21,12 @@ const router =createBrowserRouter([
                  element: <CategoryPage/>
             },
             {
-                path: "/search",
-                element: <Search/>}
+                path: "/shop",
+                element: <Search/>},
+            {
+                path: "/shop/:id",
+                element: <SingleProduct/>
+            }
         ]
     }
 ]);

@@ -591,3 +591,11 @@ input[type="number"]::-webkit-outer-spin-button {
 .add-product-btn{
   @apply mt-5 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
 }
+
+.product-image-centered {
+  max-width: 300px;  /* Make the image smaller */
+  height: auto;      /* Maintain the aspect ratio */
+  object-fit: contain; /* Ensures image is not stretched */
+  margin-bottom: 20px; /* Adds space between the image and the text */
+  text-align: center;
+}

@@ -7,7 +7,7 @@ const Navbar = () => {
       <nav className='max-w-screen-2xl mx-auto px-4 flex justify-between items-center'>
         <ul className='nav__links'>
           <li className='link'><Link to="/">Home</Link></li> 
-          <li className='link'><Link to="/">Shop</Link></li> 
+          <li className='link'><Link to="/shop">Shop</Link></li> 
           <li className='link'><Link to="/">Pages</Link></li> 
           <li className='link'><Link to="/">Contact</Link></li> 
         </ul>
