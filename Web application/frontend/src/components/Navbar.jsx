@@ -14,7 +14,7 @@ const Navbar = () => {
 
         {/*Logo*/}
         <div className='nav__logo'>
-            <Link to="/">Chase cart <span>.</span></Link>
+            <Link to="/">ChaseCart <span>.</span></Link>
         </div>
 
         {/*Nav icons*/}

@@ -7,7 +7,7 @@ const Banner = () => {
     <div className='section__container header__container'>
         <div className='header__content z-30'>
             <h4 className='uppercase'>Welcome to ChaseCart – Your Intelligent Shopping Assistant</h4>
-            <h1>Chase Cart</h1>
+            <h1>ChaseCart</h1>
             <p>
             Discover a smarter, faster way to shop. ChaseCart is here to guide you effortlessly to everything you need. 
             Say goodbye to the hassle and hello to convenience. 
