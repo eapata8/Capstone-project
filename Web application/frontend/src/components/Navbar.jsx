@@ -1,6 +1,8 @@
 import React from 'react';
 import { use } from 'react';
 import { Link } from 'react-router-dom'; 
+import { useSelector } from 'react-redux';
+
 
 const Navbar = () => {
 
@@ -33,7 +35,7 @@ const Navbar = () => {
                 <button className='hover:text-primary'>
                     <i className="ri-shopping-cart-2-line"></i>
                     <sup className='text-sm inline-block px-1.5 text-white rounded-full bg-primary text-center'>
-                    0
+                    {products.length}
                     </sup>
                 </button>
             </span> 
