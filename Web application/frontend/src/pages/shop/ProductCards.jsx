@@ -7,15 +7,22 @@ const ProductCards = ({ products }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {products.map((product) => (
-        <Link to={`/shop/${product.id}`} key={product.id} className="product_card">
-          <div className="relative">
-            {/* Display product image */}
+        <div className="relative" key={product.id}>
+          {/* Display product image */}
+          <Link to={`/shop/${product.id}`} className="product_card">
             <img
               src={product.image}
               alt={product.name}
               className="w-full h-auto object-cover"
             />
+          </Link>
+
+          <div className='hover: block absolute top-3 right-3'>
+            <button>
+              <i className="ri-shopping-cart-2-line bg-primary p-1.5 text-white hover:bg-primary-dark" ></i>
+            </button>
           </div>
+
           <div className="product__card__content">
             <h3>{product.name}</h3>
             <p>
@@ -23,7 +30,7 @@ const ProductCards = ({ products }) => {
               {product?.oldPrice ? <s> ${product.oldPrice}</s> : null}
             </p>
           </div>
-        </Link>
+        </div>
       ))}
     </div>
   );

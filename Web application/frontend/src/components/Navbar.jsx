@@ -20,7 +20,7 @@ const Navbar = () => {
         <div className='nav__icons relative'>
             {/*research bar icon*/}
            <span>
-                <Link to="/search">
+                <Link to="/shop">
                     <i className="ri-search-line"></i>
                 </Link>
             </span> 
