@@ -33,13 +33,13 @@ const CartModal = ({ products, isOpen, onClose }) => {
             ) : (
               products.map((item, index) => (
                 <div key={index} className='flex flex-col md:flex-row md:items-center md:justify-between shadow-md md:p-5 p-2 mb-4'>
-                    <div className='flex items-center'> 
+                    <div className='flex items-center size-8'> 
                         <span className='mr-4 px-1 bg-primary text-white rounded-full'>
                         0{index + 1}    
                         </span>
-                        <img src={item.image} alt="" className='size-12 object-cover mr-4'></img>
+                        <img src={item.image} alt="" className='size-8 object-cover mr-4'></img>
                         <div>
-                            <h5 className='text-lg font-medium'>{item.name}</h5>
+                            <h7 className='text-lg font-medium'>{item.name}</h7>
                             <p className='text-gray-600 text-sm'>${Number(item.price).toFixed(2)}
                             </p>
                         </div>  
