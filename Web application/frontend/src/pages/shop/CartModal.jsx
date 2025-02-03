@@ -39,7 +39,7 @@ const CartModal = ({ products, isOpen, onClose }) => {
                         </span>
                         <img src={item.image} alt="" className='size-8 object-cover mr-4'></img>
                         <div>
-                            <h7 className='text-lg font-medium'>{item.name}</h7>
+                            <h7 className='text-lg font-sm'>{item.name}</h7>
                             <p className='text-gray-600 text-sm'>${Number(item.price).toFixed(2)}
                             </p>
                         </div>  
