@@ -1,5 +1,4 @@
 import React from 'react';
-import { use } from 'react';
 import { Link } from 'react-router-dom'; 
 import { useSelector } from 'react-redux';
 
@@ -42,7 +41,7 @@ const Navbar = () => {
 
             <span>
                     <Link to="login">
-                        <i class="ri-user-line"></i>
+                        <i className="ri-user-line"></i>
                     </Link>
             </span>
         </div>
