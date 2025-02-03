@@ -1,4 +1,5 @@
 import React from 'react';
+import OrderSummary from './OrderSummary';
 
 const CartModal = ({ products, isOpen, onClose }) => {
   return (
@@ -24,29 +25,51 @@ const CartModal = ({ products, isOpen, onClose }) => {
             <h2 className="text-xl font-semibold">Shopping Cart</h2>
           </div>
 
-          <div>
+          {/* Cart items */}
+
+          <div className='cart-items'>
             {products.length === 0 ? (
               <div>Your cart is empty</div>
             ) : (
               products.map((item, index) => (
                 <div key={index} className='flex flex-col md:flex-row md:items-center md:justify-between shadow-md md:p-5 p-2 mb-4'>
-                    <div className='flex items-center'> 
+                    <div className='flex items-center size-8'> 
                         <span className='mr-4 px-1 bg-primary text-white rounded-full'>
                         0{index + 1}    
                         </span>
-                        <img src={item.image} alt="" className='size-12 object-cover mr-4'></img>
+                        <img src={item.image} alt="" className='size-8 object-cover mr-4'></img>
                         <div>
-                            <h5 className='text-lg font-medium'>{item.name}</h5>
+                            <h7 className='text-lg font-sm'>{item.name}</h7>
                             <p className='text-gray-600 text-sm'>${Number(item.price).toFixed(2)}
                             </p>
                         </div>  
-                        <div>
+                        <div className='flex flex-row md:justify-start justify-end items-center mt-2'>
+                          <button
+                          className='size-6 flex items-center justify-center px-1.5 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white ml-8'
+                          >-</button>  
+                          <span className='px-2 text-center'>{item.quantity}</span>
+                          <button
+                          className='size-6 flex items-center justify-center px-1.5 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white'
+                          >+</button>
+                          <div className='ml-5'>
+                            <button className='text-red-500 hover:text-red-800 mr-4'>
+                              Remove
+                            </button>
+                          </div>
                         </div>
                     </div>
                 </div>
               ))
             )}
           </div>
+
+          {/* Calculation */}
+          {
+            products.length > 0 && (
+              <OrderSummary />  
+            )
+          }
+
         </div>
       </div>
     </div>
