@@ -5,7 +5,8 @@ import CategoryPage from "../pages/category/CategoryPage";
 import Search from "../pages/search/Search";
 import SingleProduct from "../pages/shop/SingleProduct";
 import Contact from "../pages/contact/Contact";
-
+import Login from "../components/Login"; 
+import Register from "../components/Register"; 
 
 const router =createBrowserRouter([
 
@@ -32,6 +33,14 @@ const router =createBrowserRouter([
             {
                 path: "/contact",
                 element: <Contact/>
+            },
+            {
+                path: "/login",
+                element: <Login/>, 
+            },
+            {
+                path: "/register",
+                element: <Register/>, 
             }
         ]
     }
