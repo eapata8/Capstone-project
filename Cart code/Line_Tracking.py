@@ -32,6 +32,7 @@ class Line_Tracking:
                 self.LMR=(self.LMR | 2)
             if IR03_sensor.value == True:
                 self.LMR=(self.LMR | 1)
+                
             if self.LMR==2:
                 PWM.setMotorModel(800,800,800,800)
             elif self.LMR==4:
