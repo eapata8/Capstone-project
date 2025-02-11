@@ -35,7 +35,7 @@ class Line_Navigate:
             LMR |= 1
         
         if LMR == 2:
-            self.PWM.setMotorModel(800, 800, 800, 800)  # Move forward
+            self.PWM.setMotorModel(600, 600, 600, 600)  # Move forward
         elif LMR == 4:
             self.PWM.setMotorModel(-1500, -1500, 2500, 2500)  # Turn left
         elif LMR == 6:
@@ -48,7 +48,7 @@ class Line_Navigate:
             self.PWM.setMotorModel(0, 0, 0, 0)  # Stop (no line detected)
     
     def avoid_obstacle(self):
-        self.PWM.setMotorModel(-1450, -1450, -1450, -1450)  # Move backward slightly
+        self.PWM.setMotorModel(-100, -100, -100, -100)  # Move backward slightly
         time.sleep(0.5)
         
         # Check left and right
@@ -59,6 +59,8 @@ class Line_Navigate:
         self.pwm_S.setServoPwm('0', 150)
         time.sleep(0.2)
         right_distance = self.get_distance()
+        
+        self.pwm_S.setServoPwm('0', 90) #Look straight
         
         # Turn in the clearer direction
         if left_distance > right_distance:
@@ -78,7 +80,8 @@ class Line_Navigate:
         
     def run(self):
         while True:
-            if self.get_distance() < 30:  # Obstacle detected
+            if self.get_distance() < 10:  # Obstacle detected
+                self.PWM.setMotorModel(0, 0, 0, 0)
                 self.avoid_obstacle()
             else:
                 self.follow_line()
@@ -89,4 +92,5 @@ if __name__ == '__main__':
     try:
         robot.run()
     except KeyboardInterrupt:
-        robot.PWM.setMotorModel(0, 0, 0, 0)
+        robot.PWM.setMotorModel(0, 0, 0, 0) #Stop robot completely
+        robot.pwm_S.setServoPwm('0', 90) #Look straight
