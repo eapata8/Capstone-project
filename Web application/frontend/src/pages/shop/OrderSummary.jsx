@@ -1,9 +1,15 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { clearCart } from '../../redux/features/cart/cartSlice'
 
 const OrderSummary = () => {
     const { tax, taxRate, totalPrice, grandTotal, selectedItems } = useSelector((store) => store.cart)
-
+    const dispatch = useDispatch();
+    const handleClearCart = (e) => {
+        e.stopPropagation();
+        dispatch(clearCart());
+      }
     return (
         <div className='bg-primary-light mt-5 rounded text-base shadow-lg p-6'>
             <h2 className='text-xl text-text-dark font-semibold mb-4'> 
@@ -23,7 +29,9 @@ const OrderSummary = () => {
             </h3>
 
             <div className='flex justify-between mt-6'>
-                <button className='bg-red-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-600 transition duration-300'>
+                <button 
+                    onClick={(e) => handleClearCart(e)}
+                    className='bg-red-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-600 transition duration-300'>
                     <i className="ri-delete-bin-2-line"></i>
                     Clear Cart
                 </button>
