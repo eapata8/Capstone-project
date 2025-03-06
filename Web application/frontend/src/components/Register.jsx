@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
+import { useRegisterUserMutation } from '../redux/features/auth/authApi';
 
 const Register = () => {
     const [message, setMessage] = useState('');
@@ -7,10 +8,21 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [registerUser, {isLoading}]= useRegisterUserMutation();    
+    const navigate= useNavigate()
+
     const handleRegister = async (e) => {
         e.preventDefault();
         const data = { username,email, password };
-        console.log(data);
+        try {
+
+            await registerUser(data).unwrap()
+            alert('Registration successful')
+            navigate('/login')
+        } catch (error) {
+            setMessage('Registration failed')
+            
+        }
     };
 
     return (
@@ -54,7 +66,7 @@ const Register = () => {
                     </button>
                 </form>
                 <p className='my-5 italic text-sm text-center'>
-                                    Already have an account?
+                                    Already have an account? Please
                                     <Link to="/Login" className='text-red-700 px-1 underline'>Login</Link>.
                                 </p>
             </div>
