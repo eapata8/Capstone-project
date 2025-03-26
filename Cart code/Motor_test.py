@@ -57,58 +57,53 @@ GPIO.output(B_in3,GPIO.LOW)
 
 # Wrap main content in a try block so we can  catch the user pressing CTRL-C and run the
 # GPIO cleanup function. This will also prevent the user seeing lots of unnecessary error messages.
+
 class Motor_test:
-    def run(self):
-        while(True):
-            # Get user Input
-            user_input = input()
+    def forward(self, sec):
+        GPIO.output(F_in1, GPIO.HIGH)
+        GPIO.output(F_in2, GPIO.LOW)
+        GPIO.output(B_in1, GPIO.HIGH)
+        GPIO.output(B_in2, GPIO.LOW)
 
-            # To see users input
-            # print(user_input)
+        GPIO.output(F_in4, GPIO.HIGH)
+        GPIO.output(F_in3, GPIO.LOW)
+        GPIO.output(B_in4, GPIO.HIGH)
+        GPIO.output(B_in3, GPIO.LOW)
+        sleep(sec)  # Changed from time.sleep()
 
-            if user_input == 'w':
-                GPIO.output(F_in1,GPIO.HIGH)
-                GPIO.output(F_in2,GPIO.LOW)
-                GPIO.output(B_in1,GPIO.HIGH)
-                GPIO.output(B_in2,GPIO.LOW)
+    def reverse(self, sec):
+        GPIO.output(F_in1, GPIO.LOW)
+        GPIO.output(F_in2, GPIO.HIGH)
+        GPIO.output(B_in1, GPIO.LOW)
+        GPIO.output(B_in2, GPIO.HIGH)
 
-                GPIO.output(F_in4,GPIO.HIGH)
-                GPIO.output(F_in3,GPIO.LOW)
-                GPIO.output(B_in4,GPIO.HIGH)
-                GPIO.output(B_in3,GPIO.LOW)
+        GPIO.output(F_in4, GPIO.LOW)
+        GPIO.output(F_in3, GPIO.HIGH)
+        GPIO.output(B_in4, GPIO.LOW)
+        GPIO.output(B_in3, GPIO.HIGH)
+        sleep(sec)
 
-                print("Forward")
+    def stop(self, sec):
+        GPIO.output(F_in1, GPIO.LOW)
+        GPIO.output(F_in2, GPIO.LOW)
+        GPIO.output(B_in1, GPIO.LOW)
+        GPIO.output(B_in2, GPIO.LOW)
 
-            elif user_input == 's':
-                GPIO.output(F_in1,GPIO.LOW)
-                GPIO.output(F_in2,GPIO.HIGH)
-                GPIO.output(B_in1,GPIO.LOW)
-                GPIO.output(B_in2,GPIO.HIGH)
+        GPIO.output(F_in4, GPIO.LOW)
+        GPIO.output(F_in3, GPIO.LOW)
+        GPIO.output(B_in4, GPIO.LOW)
+        GPIO.output(B_in3, GPIO.LOW)
+        sleep(sec)
 
-                GPIO.output(F_in4,GPIO.LOW)
-                GPIO.output(F_in3,GPIO.HIGH)
-                GPIO.output(B_in4,GPIO.LOW)
-                GPIO.output(B_in3,GPIO.HIGH)
-                print('Back')
-
-            # Press 'c' to exit the script
-            elif user_input == 'c':
-                GPIO.output(F_in1,GPIO.LOW)
-                GPIO.output(F_in2,GPIO.LOW)
-                GPIO.output(B_in1,GPIO.LOW)
-                GPIO.output(B_in2,GPIO.LOW)
-
-                GPIO.output(F_in4,GPIO.LOW)
-                GPIO.output(F_in3,GPIO.LOW)
-                GPIO.output(B_in4,GPIO.LOW)
-                GPIO.output(B_in3,GPIO.LOW)
-                print('Stop')
-
-  
 if __name__ == '__main__':
     motor = Motor_test()
     try:
-        motor.run()
+        print('forward')
+        motor.forward(4)
+        print('Back')
+        motor.reverse(3)
+        print('Stop')
+        motor.stop(3)
     except KeyboardInterrupt:
         # Reset GPIO settings
         GPIO.cleanup()
