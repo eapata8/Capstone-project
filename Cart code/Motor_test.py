@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 GPIO.setwarnings(False)
+print("GPIO Clean up")
 
 # Front Left Motor
 F_in1 = 22
@@ -60,10 +61,10 @@ GPIO.output(B_in3,GPIO.LOW)
 
 class Motor_test:
     def forward(self, sec):
-        GPIO.output(F_in1, GPIO.HIGH)
-        GPIO.output(F_in2, GPIO.LOW)
-        GPIO.output(B_in1, GPIO.HIGH)
-        GPIO.output(B_in2, GPIO.LOW)
+        GPIO.output(F_in1, GPIO.LOW)
+        GPIO.output(F_in2, GPIO.HIGH)
+        GPIO.output(B_in1, GPIO.LOW)
+        GPIO.output(B_in2, GPIO.HIGH)
 
         GPIO.output(F_in4, GPIO.HIGH)
         GPIO.output(F_in3, GPIO.LOW)
@@ -72,10 +73,22 @@ class Motor_test:
         sleep(sec)  # Changed from time.sleep()
 
     def reverse(self, sec):
+        GPIO.output(F_in1, GPIO.HIGH)
+        GPIO.output(F_in2, GPIO.LOW)
+        GPIO.output(B_in1, GPIO.HIGH)
+        GPIO.output(B_in2, GPIO.LOW)
+
+        GPIO.output(F_in4, GPIO.LOW)
+        GPIO.output(F_in3, GPIO.HIGH)
+        GPIO.output(B_in4, GPIO.LOW)
+        GPIO.output(B_in3, GPIO.HIGH)
+        sleep(sec)
+
+    def turn_left(self, sec):
         GPIO.output(F_in1, GPIO.LOW)
-        GPIO.output(F_in2, GPIO.HIGH)
-        GPIO.output(B_in1, GPIO.LOW)
-        GPIO.output(B_in2, GPIO.HIGH)
+        GPIO.output(F_in2, GPIO.LOW)
+        GPIO.output(B_in1, GPIO.HIGH)
+        GPIO.output(B_in2, GPIO.LOW)
 
         GPIO.output(F_in4, GPIO.LOW)
         GPIO.output(F_in3, GPIO.HIGH)
@@ -99,7 +112,7 @@ if __name__ == '__main__':
     motor = Motor_test()
     try:
         print('forward')
-        motor.forward(4)
+        motor.forward(7)
         print('Back')
         motor.reverse(3)
         print('Stop')
