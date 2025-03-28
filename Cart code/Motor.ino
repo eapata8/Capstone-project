@@ -2,18 +2,18 @@
 
 // Définition des broches
 // Front Left Motor
-#define F_in1 4
-#define F_in2 16
+#define F_in1 19
+#define F_in2 21
 // Front Right Motor
-#define F_in3 17
-#define F_in4 18
+#define F_in3 22
+#define F_in4 23
 
 // Back Left Motor
-#define B_in1 19
-#define B_in2 21
+#define B_in1 18
+#define B_in2 17
 // Back Right Motor
-#define B_in3 22
-#define B_in4 23
+#define B_in3 16
+#define B_in4 4
 
 void forward(int sec) {
   digitalWrite(F_in1, LOW);
@@ -94,18 +94,18 @@ void loop() {
         Serial.println("Commande : Avancer");
         forward(5);
         break;
-      case 'B': // Reculer
+/*       case 'B': // Reculer
         Serial.println("Commande : Reculer");
         reverse(3);
         break;
-/*       case 'L': // Tourner à gauche
+      case 'L': // Tourner à gauche
         Serial.println("Commande : Gauche");
         turn_left(2);
-        break;
+        break; */
       case 'S': // Stop
         Serial.println("Commande : Stop");
         stop(3);
-        break; */
+        break; 
       default:
         Serial.println("Commande inconnue.");
     }
