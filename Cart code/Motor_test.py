@@ -55,86 +55,109 @@ class Motor_test:
     def __init__(self):
         self.current_speed = 100  # Track current speed
         
-    def set_speed(self, speed):
-        """Set speed for all motors (0-100)"""
-        if 0 <= speed <= 100:
-            self.current_speed = speed
-            r.ChangeDutyCycle(speed)
-            s.ChangeDutyCycle(speed)
-            p.ChangeDutyCycle(speed)
-            q.ChangeDutyCycle(speed)
+    def setMotorModel(self, fl_speed, fr_speed, bl_speed, br_speed):
+        # Front Left Motor
+        if fl_speed > 0:
+            GPIO.output(F_in1, GPIO.LOW)
+            GPIO.output(F_in2, GPIO.HIGH)
+            r.ChangeDutyCycle(abs(fl_speed) if abs(fl_speed) <= 100 else 100)
+        elif fl_speed < 0:
+            GPIO.output(F_in1, GPIO.HIGH)
+            GPIO.output(F_in2, GPIO.LOW)
+            r.ChangeDutyCycle(abs(fl_speed) if abs(fl_speed) <= 100 else 100)
+        else:
+            GPIO.output(F_in1, GPIO.LOW)
+            GPIO.output(F_in2, GPIO.LOW)
+            r.ChangeDutyCycle(0)
+
+        # Front Right Motor
+        if fr_speed > 0:
+            GPIO.output(F_in3, GPIO.LOW)
+            GPIO.output(F_in4, GPIO.HIGH)
+            s.ChangeDutyCycle(abs(fr_speed) if abs(fr_speed) <= 100 else 100)
+        elif fr_speed < 0:
+            GPIO.output(F_in3, GPIO.HIGH)
+            GPIO.output(F_in4, GPIO.LOW)
+            s.ChangeDutyCycle(abs(fr_speed) if abs(fr_speed) <= 100 else 100)
+        else:
+            GPIO.output(F_in3, GPIO.LOW)
+            GPIO.output(F_in4, GPIO.LOW)
+            s.ChangeDutyCycle(0)
+
+        # Back Left Motor
+        if bl_speed > 0:
+            GPIO.output(B_in1, GPIO.LOW)
+            GPIO.output(B_in2, GPIO.HIGH)
+            q.ChangeDutyCycle(abs(bl_speed) if abs(bl_speed) <= 100 else 100)
+        elif bl_speed < 0:
+            GPIO.output(B_in1, GPIO.HIGH)
+            GPIO.output(B_in2, GPIO.LOW)
+            q.ChangeDutyCycle(abs(bl_speed) if abs(bl_speed) <= 100 else 100)
+        else:
+            GPIO.output(B_in1, GPIO.LOW)
+            GPIO.output(B_in2, GPIO.LOW)
+            q.ChangeDutyCycle(0)
+
+        # Back Right Motor
+        if br_speed > 0:
+            GPIO.output(B_in3, GPIO.LOW)
+            GPIO.output(B_in4, GPIO.HIGH)
+            p.ChangeDutyCycle(abs(br_speed) if abs(br_speed) <= 100 else 100)
+        elif br_speed < 0:
+            GPIO.output(B_in3, GPIO.HIGH)
+            GPIO.output(B_in4, GPIO.LOW)
+            p.ChangeDutyCycle(abs(br_speed) if abs(br_speed) <= 100 else 100)
+        else:
+            GPIO.output(B_in3, GPIO.LOW)
+            GPIO.output(B_in4, GPIO.LOW)
+            p.ChangeDutyCycle(0)
     
-    def forward(self, sec):
-        # Front left and back left motors forward
-        GPIO.output(F_in1, GPIO.LOW)
-        GPIO.output(F_in2, GPIO.HIGH)
-        GPIO.output(B_in1, GPIO.LOW)
-        GPIO.output(B_in2, GPIO.HIGH)
-        
-        # Front right and back right motors forward
-        GPIO.output(F_in4, GPIO.HIGH)
-        GPIO.output(F_in3, GPIO.LOW)
-        GPIO.output(B_in4, GPIO.HIGH)
-        GPIO.output(B_in3, GPIO.LOW)
-        
-        sleep(sec)
-    
-    def reverse(self, sec):
-        # Front left and back left motors reverse
-        GPIO.output(F_in1, GPIO.HIGH)
-        GPIO.output(F_in2, GPIO.LOW)
-        GPIO.output(B_in1, GPIO.HIGH)
-        GPIO.output(B_in2, GPIO.LOW)
-        
-        # Front right and back right motors reverse
-        GPIO.output(F_in4, GPIO.LOW)
-        GPIO.output(F_in3, GPIO.HIGH)
-        GPIO.output(B_in4, GPIO.LOW)
-        GPIO.output(B_in3, GPIO.HIGH)
-        
-        sleep(sec)
-    
-    def turn_left(self, sec):
-        # Left motors reverse
-        GPIO.output(F_in1, GPIO.HIGH)
-        GPIO.output(F_in2, GPIO.LOW)
-        GPIO.output(B_in1, GPIO.HIGH)
-        GPIO.output(B_in2, GPIO.LOW)
-        
-        # Right motors forward
-        GPIO.output(F_in4, GPIO.HIGH)
-        GPIO.output(F_in3, GPIO.LOW)
-        GPIO.output(B_in4, GPIO.HIGH)
-        GPIO.output(B_in3, GPIO.LOW)
-        
-        sleep(sec)
-    
-    def stop(self, sec=0):
-        # Stop all motors
-        GPIO.output(F_in1, GPIO.LOW)
-        GPIO.output(F_in2, GPIO.LOW)
-        GPIO.output(B_in1, GPIO.LOW)
-        GPIO.output(B_in2, GPIO.LOW)
-        GPIO.output(F_in4, GPIO.LOW)
-        GPIO.output(F_in3, GPIO.LOW)
-        GPIO.output(B_in4, GPIO.LOW)
-        GPIO.output(B_in3, GPIO.LOW)
-        
-        if sec > 0:
-            sleep(sec)
+    def forward(self, speed=100):
+        self.setMotorModel(speed, speed, speed, speed)
+
+    def reverse(self, speed=100):
+        self.setMotorModel(-speed, -speed, -speed, -speed)
+
+    def turn_left(self, speed=100):
+        self.setMotorModel(-speed, speed, -speed, speed)
+
+    def turn_right(self, speed=100):
+        self.setMotorModel(speed, -speed, speed, -speed)
+
+    def sharp_left(self, speed=100):
+        self.setMotorModel(-speed * 2, speed * 2, -speed * 2, speed * 2)
+
+    def sharp_right(self, speed=100):
+        self.setMotorModel(speed * 2, -speed * 2, speed * 2, -speed * 2)
+
+    def stop(self):
+        self.setMotorModel(0, 0, 0, 0)
 
 if __name__ == '__main__':
     motor = Motor_test()
     try:
-        print('Moving forward at full speed')
-        motor.forward(3)
-        print('Moving backward at full speed')
-        motor.reverse(2)
-        print('Sharp left turn')
-        motor.turn_left(1)
-        print('Moving forward at full speed')
-        motor.forward(3)
-        print('Stopping')
+        # Forward at moderate speed (60% power)
+        print("Moving forward (60% speed)")
+        motor.setMotorModel(60, 60, 60, 60)  # All wheels forward
+        sleep(2)
+
+        # Sharp reverse (full speed)
+        print("Reversing fast (100% speed)")
+        motor.setMotorModel(-100, -100, -100, -100)  # All wheels backward
+        sleep(1.5)
+
+        # Pivot turn left (left wheels back, right wheels forward)
+        print("Pivot turning left")
+        motor.setMotorModel(-80, 80, -80, 80)  # Left wheels reverse, right wheels forward
+        sleep(1)
+
+        # Smooth right curve (left wheels faster forward)
+        print("Gentle right curve")
+        motor.setMotorModel(70, 30, 70, 30)  # Left wheels faster
+        sleep(2)
+
+        # Emergency stop
+        print("Full stop")
         motor.stop()
         
     except KeyboardInterrupt:
