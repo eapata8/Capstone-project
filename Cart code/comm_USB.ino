@@ -5,7 +5,7 @@ void setup() {
     
     // Attendre que la connexion soit établie
     while (!Serial) {
-      delay(10);
+      delay(5);
     }
     
     Serial.println("ESP32 prêt à communiquer via USB");
