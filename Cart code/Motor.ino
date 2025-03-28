@@ -4,20 +4,16 @@
 // Front Left Motor
 #define F_in1 22
 #define F_in2 23
-#define F_en_a 12
 // Front Right Motor
 #define F_in3 24
 #define F_in4 25
-#define F_en_b 18
 
 // Back Left Motor
 #define B_in1 17
 #define B_in2 27
-#define B_en_a 19
 // Back Right Motor
 #define B_in3 5
 #define B_in4 6
-#define B_en_b 13
 
 void forward(int sec) {
   digitalWrite(F_in1, LOW);
