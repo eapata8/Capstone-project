@@ -102,9 +102,28 @@ def test_ultrasonic_servo():
 
 
 if __name__ == '__main__':
-    #test_ultrasonic_servo() 
-    
+
+    # test_ultrasonic_servo() 
+    """ try:
+            test_ultrasonic_servo() 
+        except KeyboardInterrupt:
+            GPIO.cleanup()
+            ser.write(b"S\n")
+            print("Arrêt manuel") """
+
+    # test de follow_line()
+    print("Mode : SUIVI DE LIGNE UNIQUEMENT (pas d'obstacle)")
     try:
+        while True:
+            follow_line()
+            time.sleep(0.2)  # plus réactif
+    except KeyboardInterrupt:
+        GPIO.cleanup()
+        ser.write(b"S\n")
+        print("Arrêt manuel")
+
+    # test final
+    """ try:
         while True:
             left = measure_at("left")
             center = measure_at("center")
@@ -123,4 +142,4 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         GPIO.cleanup()
         ser.write(b"S\n")
-        print("Arrêt manuel")
+        print("Arrêt manuel") """
