@@ -21,10 +21,10 @@ void forward(int sec) {
   digitalWrite(B_in1, LOW);
   digitalWrite(B_in2, HIGH);
 
-  digitalWrite(F_in4, HIGH);
   digitalWrite(F_in3, LOW);
-  digitalWrite(B_in4, HIGH);
+  digitalWrite(F_in4, HIGH);
   digitalWrite(B_in3, LOW);
+  digitalWrite(B_in4, HIGH);
   delay(sec * 1000);
 }
 
@@ -34,10 +34,10 @@ void reverse(int sec) {
   digitalWrite(B_in1, HIGH);
   digitalWrite(B_in2, LOW);
 
-  digitalWrite(F_in4, LOW);
   digitalWrite(F_in3, HIGH);
-  digitalWrite(B_in4, LOW);
+  digitalWrite(F_in4, LOW);
   digitalWrite(B_in3, HIGH);
+  digitalWrite(B_in4, LOW);
   delay(sec * 1000);
 }
 
@@ -47,10 +47,10 @@ void turn_left(int sec) {
   digitalWrite(B_in1, HIGH);
   digitalWrite(B_in2, LOW);
 
-  digitalWrite(F_in4, LOW);
   digitalWrite(F_in3, HIGH);
-  digitalWrite(B_in4, LOW);
+  digitalWrite(F_in4, LOW);
   digitalWrite(B_in3, HIGH);
+  digitalWrite(B_in4, LOW);
   delay(sec * 1000);
 }
 
@@ -87,21 +87,34 @@ void setup() {
 
 void loop() {
   if (Serial.available()) {
-    char command = Serial.read();
+    String cmd = Serial.readStringUntil('\n');
+
+    if (cmd == "F") {
+      forward(5);
+    } else if (cmd == "B") {
+      reverse(3);
+    } else if (cmd == "L") {
+      turn_left(2);
+    } else if (cmd == "S") {
+      stop(3);
+    } else {
+      Serial.println("Commande inconnue.");
+    }
+
     
-    switch(command) {
+    /* switch(command) {
       case 'F': // Avancer
         Serial.println("Commande : Avancer");
         forward(5);
         break;
-/*       case 'B': // Reculer
+       case 'B': // Reculer
         Serial.println("Commande : Reculer");
         reverse(3);
         break;
       case 'L': // Tourner à gauche
         Serial.println("Commande : Gauche");
         turn_left(2);
-        break; */
+        break; 
       case 'S': // Stop
         Serial.println("Commande : Stop");
         stop(3);
@@ -109,5 +122,6 @@ void loop() {
       default:
         Serial.println("Commande inconnue.");
     }
+  } */
   }
 }
