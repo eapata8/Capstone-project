@@ -1,27 +1,38 @@
-from gpiozero import AngularServo
+import RPi.GPIO as GPIO
 import time
 
 class ServoControl:
     def __init__(self, pin):
-        self.servo = AngularServo(
-            pin,
-            min_angle=0,
-            max_angle=180,
-            min_pulse_width=0.5/1000,
-            max_pulse_width=2.5/1000
-        )
+        self.pin = pin
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pin, GPIO.OUT)
+
+        self.servo = GPIO.PWM(self.pin, 50)  # 50 Hz pour servo standard
+        self.servo.start(0)  # Démarre à 0% de rapport cyclique
+        time.sleep(0.5)
 
     def set_position(self, direction):
-        if direction == "left":
-            self.servo.angle = 30   # 0 extrême gauche
-        elif direction == "center":
-            self.servo.angle = 90
-        elif direction == "right":
-            self.servo.angle = 150  # 180 pour extrême droite
-        else:
+        angle_map = {
+            "left": 30,
+            "center": 90,
+            "right": 150
+        }
+        if direction not in angle_map:
+            print("Direction invalide")
             return
-        time.sleep(0.4)  # laisser le temps au servo de se stabiliser
 
+        angle = angle_map[direction]
+        duty = self.angle_to_duty_cycle(angle)
+
+        print(f"Position {direction} → angle {angle}° → duty {duty:.2f}%")
+        self.servo.ChangeDutyCycle(duty)
+        time.sleep(0.4)
+        self.servo.ChangeDutyCycle(0)  # Stop signal pour éviter les vibrations
+
+def angle_to_duty_cycle(self, angle):
+        # Convertit un angle en duty cycle (valeurs typiques pour servo 0°–180°)
+        # 0° → 2.5% ; 180° → 12.5%
+        return 2.5 + (angle / 180.0) * 10.0
 
 if __name__ == '__main__':
     SERVO_PIN = 17  
@@ -42,4 +53,6 @@ if __name__ == '__main__':
             time.sleep(1)
 
     except KeyboardInterrupt:
-        print("\nTest du servo terminé.")
+        servo.stop()
+        GPIO.cleanup()
+        print("Fin du test.")
