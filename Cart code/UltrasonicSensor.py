@@ -1,7 +1,7 @@
 # ultrasonic.py
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 from gpiozero import DistanceSensor
-import time
+#import time
 
 class UltrasonicSensor:
     def __init__(self, trig_pin, echo_pin):
