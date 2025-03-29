@@ -21,3 +21,25 @@ class ServoControl:
         else:
             return
         time.sleep(0.4)  # laisser le temps au servo de se stabiliser
+
+
+if __name__ == '__main__':
+    SERVO_PIN = 17  
+    servo = ServoControl(SERVO_PIN)
+
+    try:
+        while True:
+            servo.set_position("left")
+            print("Servo à gauche")
+            time.sleep(1)
+
+            servo.set_position("center")
+            print("Servo au centre")
+            time.sleep(1)
+
+            servo.set_position("right")
+            print("Servo à droite")
+            time.sleep(1)
+
+    except KeyboardInterrupt:
+        print("\nTest du servo terminé.")
