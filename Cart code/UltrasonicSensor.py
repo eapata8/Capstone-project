@@ -1,27 +1,12 @@
 # ultrasonic.py
 import RPi.GPIO as GPIO
+from gpiozero import DistanceSensor
 import time
 
 class UltrasonicSensor:
     def __init__(self, trig_pin, echo_pin):
-        self.trig = trig_pin
-        self.echo = echo_pin
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.trig, GPIO.OUT)
-        GPIO.setup(self.echo, GPIO.IN)
-
+        self.sensor = DistanceSensor(echo=echo_pin, trigger=trig_pin, max_distance=3)
     def get_distance(self):
-        GPIO.output(self.trig, False)
-        time.sleep(0.0002)
-        GPIO.output(self.trig, True)
-        time.sleep(0.00001)
-        GPIO.output(self.trig, False)
-
-        while GPIO.input(self.echo) == 0:
-            start = time.time()
-        while GPIO.input(self.echo) == 1:
-            stop = time.time()
-
-        duration = stop - start
-        distance = duration * 34300 / 2
-        return round(distance, 1)
+        # gpiozero retourne une valeur entre 0 et 1 (proportion)
+        distance_cm = self.sensor.distance * 100
+        return round(distance_cm, 1)
