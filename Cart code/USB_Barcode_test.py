@@ -28,4 +28,5 @@ def lookup_product(barcode):
 if __name__ == '__main__':
     while True:
         barcode = print(input("Scan a barcode right now:"))
+
         lookup_product(barcode)

@@ -1,8 +1,10 @@
 import RPi.GPIO as GPIO
 from time import sleep
+import serial
 
 GPIO.setwarnings(False)
 print("GPIO Clean up")
+
 
 # Front Left Motor
 F_in1 = 22
@@ -84,14 +86,50 @@ class Motor_test:
         GPIO.output(B_in3, GPIO.HIGH)
         sleep(sec)
 
+    def turn_left_inPlace(self, sec):
+        GPIO.output(F_in1, GPIO.HIGH)
+        GPIO.output(F_in2, GPIO.LOW)
+        GPIO.output(B_in1, GPIO.HIGH)
+        GPIO.output(B_in2, GPIO.LOW)
+
+        GPIO.output(F_in4, GPIO.HIGH)
+        GPIO.output(F_in3, GPIO.LOW)
+        GPIO.output(B_in4, GPIO.HIGH)
+        GPIO.output(B_in3, GPIO.LOW)
+        sleep(sec)
+    
     def turn_left(self, sec):
         GPIO.output(F_in1, GPIO.LOW)
         GPIO.output(F_in2, GPIO.LOW)
         GPIO.output(B_in1, GPIO.HIGH)
         GPIO.output(B_in2, GPIO.LOW)
 
+        GPIO.output(F_in4, GPIO.HIGH)
+        GPIO.output(F_in3, GPIO.LOW)
+        GPIO.output(B_in4, GPIO.HIGH)
+        GPIO.output(B_in3, GPIO.LOW)
+        sleep(sec)
+
+    def turn_right_inPlace(self, sec):
+        GPIO.output(F_in1, GPIO.LOW)
+        GPIO.output(F_in2, GPIO.HIGH)
+        GPIO.output(B_in1, GPIO.LOW)
+        GPIO.output(B_in2, GPIO.HIGH)
+
         GPIO.output(F_in4, GPIO.LOW)
         GPIO.output(F_in3, GPIO.HIGH)
+        GPIO.output(B_in4, GPIO.LOW)
+        GPIO.output(B_in3, GPIO.HIGH)
+        sleep(sec)
+
+    def turn_right(self, sec):
+        GPIO.output(F_in1, GPIO.LOW)
+        GPIO.output(F_in2, GPIO.HIGH)
+        GPIO.output(B_in1, GPIO.LOW)
+        GPIO.output(B_in2, GPIO.HIGH)
+
+        GPIO.output(F_in4, GPIO.LOW)
+        GPIO.output(F_in3, GPIO.LOW)
         GPIO.output(B_in4, GPIO.LOW)
         GPIO.output(B_in3, GPIO.HIGH)
         sleep(sec)
@@ -109,15 +147,26 @@ class Motor_test:
         sleep(sec)
 
 if __name__ == '__main__':
-    motor = Motor_test()
-    try:
-        print('forward')
-        motor.forward(7)
-        print('Back')
-        motor.reverse(3)
-        print('Stop')
-        motor.stop(3)
-    except KeyboardInterrupt:
-        # Reset GPIO settings
-        GPIO.cleanup()
-        print("GPIO Clean up")
+    ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
+    sleep(2)  # Wait for ESP32 to initialize
+
+    #motor = Motor_test()
+    ser.write(b"F\n")  # Send 'F' for Forward
+    sleep(1)
+    ser.write(b"S\n")  # Send 'S' to Stop
+    sleep(1)
+    # try:
+    #     print('forward')
+    #     motor.forward(5)
+    #     print('Back')
+    #     motor.reverse(3)
+    #     print("Turn left")
+    #     motor.turn_left(5)
+    #     print("Turn right")
+    #     motor.turn_right
+    #     print('Stop')
+    #     motor.stop(3)
+    # except KeyboardInterrupt:
+    #     # Reset GPIO settings
+    #     GPIO.cleanup()
+    #     print("GPIO Clean up")
