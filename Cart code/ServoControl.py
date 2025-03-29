@@ -13,11 +13,11 @@ class ServoControl:
 
     def set_position(self, direction):
         if direction == "left":
-            self.servo.angle = 30   # ou 0 si tu veux extrême gauche
+            self.servo.angle = 30   # 0 extrême gauche
         elif direction == "center":
             self.servo.angle = 90
         elif direction == "right":
-            self.servo.angle = 150  # ou 180 pour extrême droite
+            self.servo.angle = 150  # 180 pour extrême droite
         else:
             return
         time.sleep(0.4)  # laisser le temps au servo de se stabiliser
