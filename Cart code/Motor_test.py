@@ -2,7 +2,9 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 GPIO.setwarnings(False)
+GPIO.cleanup()
 print("GPIO Clean up")
+
 
 # Front Left Motor
 F_in1 = 22

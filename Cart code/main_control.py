@@ -6,9 +6,12 @@ from UltrasonicSensor import UltrasonicSensor
 from ServoControl import ServoControl
 from gpiozero import LineSensor
 
+GPIO.setwarnings(False)
+GPIO.cleanup()
+print("GPIO Clean up")
 
 # Configuration
-TRIG = 4
+TRIG = 6
 ECHO = 21
 SERVO_PIN = 17
 sensor = UltrasonicSensor(TRIG, ECHO)

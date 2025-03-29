@@ -6,7 +6,7 @@ ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 time.sleep(2)  # Laisser le temps à la connexion série de s'établir
 
 # Configuration des pins pour le capteur ultrasonique
-TRIG = 4
+TRIG = 6
 ECHO = 21
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(TRIG, GPIO.OUT)
