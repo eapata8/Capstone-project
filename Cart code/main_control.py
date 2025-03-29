@@ -2,8 +2,8 @@
 import time
 import serial
 import RPi.GPIO as GPIO
-from ultrasonic import UltrasonicSensor
-from servo_control import ServoControl
+from UltrasonicSensor import UltrasonicSensor
+from ServoControl import ServoControl
 
 # Configuration
 TRIG = 4
@@ -20,27 +20,29 @@ def measure_at(direction):
     servo.set_position(direction)
     return sensor.get_distance()
 
-try:
-    while True:
-        left = measure_at("left")
-        center = measure_at("center")
-        right = measure_at("right")
 
-        print(f"Gauche: {left} | Centre: {center} | Droite: {right}")
+if __name__ == '__main__':
+    try:
+        while True:
+            left = measure_at("left")
+            center = measure_at("center")
+            right = measure_at("right")
 
-        if center < 20 and left < 20 and right < 20:
-            ser.write(b"S\n")
-        elif center < 20:
-            if left > right:
-                ser.write(b"L\n")
+            print(f"Gauche: {left} | Centre: {center} | Droite: {right}")
+
+            if center < 20 and left < 20 and right < 20:
+                ser.write(b"S\n")
+            elif center < 20:
+                if left > right:
+                    ser.write(b"L\n")
+                else:
+                    ser.write(b"R\n")
             else:
-                ser.write(b"R\n")
-        else:
-            ser.write(b"F\n")
+                ser.write(b"F\n")
 
-        time.sleep(1)
+            time.sleep(1)
 
-except KeyboardInterrupt:
-    GPIO.cleanup()
-    ser.write(b"S\n")
-    print("Arrêt")
+    except KeyboardInterrupt:
+        GPIO.cleanup()
+        ser.write(b"S\n")
+        print("Arrêt")
