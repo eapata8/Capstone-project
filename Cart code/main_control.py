@@ -12,7 +12,7 @@ print("GPIO Clean up")
 
 # Configuration
 TRIG = 6
-ECHO = 21
+ECHO = 4
 SERVO_PIN = 17
 sensor = UltrasonicSensor(TRIG, ECHO)
 servo = ServoControl(SERVO_PIN)
