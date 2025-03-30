@@ -7,10 +7,10 @@ ctrl = main_control()
 def test_ultrasonic_servo():
     try:
         while True:
-            for direction in ["left", "center", "right"]:
+            for direction in ["center"]:
                 dist = ctrl.measure_at(direction)
                 print(f"{direction.capitalize()} : {dist} cm")
-                time.sleep(0.5)
+                time.sleep(2)
     except KeyboardInterrupt:
         ctrl.cleanup()
 
@@ -52,18 +52,19 @@ def test_obstacle_avoidance():
     print("Test : Évitement d'obstacles")
     try:
         while True:
-            left = ctrl.measure_at("left")
             center = ctrl.measure_at("center")
-            right = ctrl.measure_at("right")
 
-            print(f"Gauche: {left} | Centre: {center} | Droite: {right}")
+            print(f"Centre: {center}")
 
-            if center < 20:
-                ctrl.avoid_obstacle(left, right)
+            if center <= 20:
+                ctrl.emergency_Stop()
+                left = ctrl.measure_at("left")
+                right = ctrl.measure_at("right")
+                #ctrl.avoid_obstacle(left, right)
             else:
                 ctrl.follow_line()
 
-            time.sleep(1)
+            time.sleep(0.2)
     except KeyboardInterrupt:
         ctrl.cleanup()
         print("Arrêt manuel")
@@ -71,7 +72,7 @@ def test_obstacle_avoidance():
 
 if __name__ == '__main__':
 
-    test_ultrasonic_servo()
+    test_obstacle_avoidance()
 
     """  print("=== Menu de test ===")
         print("1 - Test Ultrason + Servo")

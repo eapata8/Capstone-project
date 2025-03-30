@@ -8,27 +8,31 @@ from gpiozero import LineSensor
 
 GPIO.setwarnings(False)
 GPIO.cleanup()
-print("GPIO Clean up")
+#print("GPIO Clean up")
 
 class main_control:
     def __init__(self):
+        GPIO.setwarnings(False)
+        GPIO.cleanup()
+        print("GPIO Clean up")
+        
         TRIG = 6
-        ECHO = 4
-        SERVO_PIN = 17
-        sensor = UltrasonicSensor(TRIG, ECHO)
-        servo = ServoControl(SERVO_PIN)
+        ECHO = 17
+        SERVO_PIN = 27
+        self.sensor = UltrasonicSensor(TRIG, ECHO)
+        self.servo = ServoControl(SERVO_PIN)
 
         LEFT_SENSOR = 20
         MIDDLE_SENSOR = 16
         RIGHT_SENSOR = 26
-        IR01_sensor = LineSensor(LEFT_SENSOR)
-        IR02_sensor = LineSensor(MIDDLE_SENSOR)
-        IR03_sensor = LineSensor(RIGHT_SENSOR)
+        self.IR01_sensor = LineSensor(LEFT_SENSOR)
+        self.IR02_sensor = LineSensor(MIDDLE_SENSOR)
+        self.IR03_sensor = LineSensor(RIGHT_SENSOR)
 
         # Communication série vers ESP32
-        ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
+        self.ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
         sleep(1)
-        ser.reset_input_buffer()
+        self.ser.reset_input_buffer()
 
         # Front Left Motor
         F_en_a = 12
@@ -48,14 +52,21 @@ class main_control:
         GPIO.setup(F_en_b,GPIO.OUT)
         GPIO.setup(B_en_b,GPIO.OUT)
 
-        frontL_wheel = GPIO.PWM(F_en_a,1000)
-        frontR_wheel = GPIO.PWM(F_en_b,1000)
-        backL_wheel = GPIO.PWM(B_en_a,1000)
-        backR_wheel = GPIO.PWM(B_en_b,1000)
-        frontL_wheel.start(0)
-        frontR_wheel.start(0)
-        backL_wheel.start(0)
-        backR_wheel.start(0)
+        self.frontL_wheel = GPIO.PWM(F_en_a,1000)
+        self.frontR_wheel = GPIO.PWM(F_en_b,1000)
+        self.backL_wheel = GPIO.PWM(B_en_a,1000)
+        self.backR_wheel = GPIO.PWM(B_en_b,1000)
+        self.frontL_wheel.start(0)
+        self.frontR_wheel.start(0)
+        self.backL_wheel.start(0)
+        self.backR_wheel.start(0)
+    
+    def cleanup(self):
+        GPIO.cleanup()
+        
+    def emergency_Stop(self):
+        self.set_motor_speed(0, 0, 0, 0)
+        self.ser.write(b"S\n")
 
     def set_motor_speed(self, speedFL, speedFR, speedBL, speedBR):
         self.frontL_wheel.ChangeDutyCycle(speedFL)
@@ -81,16 +92,22 @@ class main_control:
         LMR = self.get_line_position()
 
         if LMR == 2:
+            self.set_motor_speed(75, 75, 75, 75)
             self.ser.write(b"F\n")  # Avancer
         elif LMR == 4:
+            self.set_motor_speed(40, 80, 40, 80)
             self.ser.write(b"L\n")  # Tourner gauche
         elif LMR == 6:
+            self.set_motor_speed(60, 80, 60, 80)
             self.ser.write(b"L\n")  # Tourner gauche
-        elif self.LMR==1:
+        elif LMR==1:
+            self.set_motor_speed(80, 40, 80, 40)
             self.ser.write(b"R\n")  # Tourner droite
         elif LMR == 3:
+            self.set_motor_speed(80, 60, 80, 60)
             self.ser.write(b"R\n")  # Tourner droite
         elif LMR == 7 or LMR == 0:
+            self.set_motor_speed(0, 0, 0, 0)
             self.ser.write(b"S\n")  # Stop : perdu la ligne
 
     def avoid_obstacle(self, left_distance, right_distance):
