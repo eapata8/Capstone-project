@@ -14,6 +14,28 @@ def test_ultrasonic_servo():
     except KeyboardInterrupt:
         ctrl.cleanup()
 
+def test_ir_sensors():
+    print("Test : Capteurs infrarouges (suivi de ligne)")
+    try:
+        while True:
+            left = ctrl.IR01_sensor.value
+            middle = ctrl.IR02_sensor.value
+            right = ctrl.IR03_sensor.value
+
+            if not left and middle and not right:
+                print("→ Ligne au milieu")
+            elif not left and not middle and right:
+                print("→ Ligne à droite")
+            elif left and not middle and not right:
+                print("→ Ligne à gauche")
+            elif not left and not middle and not right:
+                print("→ Aucune ligne détectée")
+            elif left and right:
+                print("→ Ligne large (ou croisement)")
+            time.sleep(0.2)
+    except KeyboardInterrupt:
+        print("\nFin du test.")
+
 
 def test_follow_line():
     print("Test : Suivi de ligne")
@@ -48,8 +70,7 @@ def test_obstacle_avoidance():
 
 
 if __name__ == '__main__':
-   
-    print("1 - Test Ultrason + Servo")
+
     test_ultrasonic_servo()
 
     """  print("=== Menu de test ===")
@@ -65,5 +86,7 @@ if __name__ == '__main__':
             test_follow_line()
         elif choix == "3":
             test_obstacle_avoidance()
+        elif choix == "4":
+            test_ir_sensors()
         else:
             print("Choix invalide") """
