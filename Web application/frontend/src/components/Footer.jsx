@@ -17,7 +17,7 @@ const Footer = () => {
             <span>
               <i className="ri-mail-send-line"></i>
             </span>
-            Chasecart@outlook.com
+            cegcapstoneproject@gmail.com
           </p>
           <p>
             <span>
