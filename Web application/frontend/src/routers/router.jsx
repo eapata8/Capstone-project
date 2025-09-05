@@ -1,12 +1,14 @@
-import {createBrowserRouter} from "react-router-dom"
+import {createBrowserRouter, Routes, Route} from "react-router-dom"
 import App from "../App";
-import Home from "../pages/home/home";
+import Home from "../pages/home/Home";
 import CategoryPage from "../pages/category/CategoryPage";
 import Search from "../pages/search/Search";
 import SingleProduct from "../pages/shop/SingleProduct";
 import Contact from "../pages/contact/Contact";
 import Login from "../components/Login"; 
 import Register from "../components/Register"; 
+import Checkout from '../pages/shop/Checkout';
+import OrderSuccess from '../pages/shop/OrderSuccess';
 
 const router =createBrowserRouter([
 
@@ -41,6 +43,14 @@ const router =createBrowserRouter([
             {
                 path: "/register",
                 element: <Register/>, 
+            },
+            {
+                path: "/checkout",
+                element: <Checkout />
+            },
+            {
+                path: "/order-success",
+                element: <OrderSuccess />
             }
         ]
     }

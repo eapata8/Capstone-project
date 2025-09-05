@@ -2,11 +2,13 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux';
 import { clearCart} from '../../redux/features/cart/cartSlice';
-
+import { useNavigate } from 'react-router-dom';
 
 const OrderSummary = () => {
     const { tax, taxRate, totalPrice, grandTotal, selectedItems } = useSelector((store) => store.cart)
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     return (
         <div className='bg-primary-light mt-5 rounded text-base shadow-lg p-6'>
             <h2 className='text-xl text-text-dark font-semibold mb-4'> 
@@ -32,7 +34,15 @@ const OrderSummary = () => {
                     Clear Cart
                 </button>
                 
-                <button className='bg-green-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-600 transition duration-300'>
+                <button
+                  className='bg-green-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-600 transition duration-300'
+                  onClick={() => {
+                    // close navbar (mobile) before navigation
+                    window.dispatchEvent(new Event('closeNavbar'));
+                    navigate('/checkout');
+                  }}
+                  disabled={selectedItems === 0}
+                >
                     Proceed to Checkout  
                 </button>  
             </div>

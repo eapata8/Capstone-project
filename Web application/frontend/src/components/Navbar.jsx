@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link ,useNavigate} from 'react-router-dom'; 
 import { useDispatch, useSelector } from 'react-redux';
 import CartModal from '../pages/shop/CartModal';
@@ -6,7 +6,7 @@ import avatarImg from '../assets/avatar.png';
 import { useLogoutUserMutation } from '../redux/features/auth/authApi';
 import { logout } from '../redux/features/auth/authSlice';
 
-const Navbar = () => {
+const Navbar = (props) => {
 
   const products = useSelector((state) => state.cart.products);
   //console.log(products);//
@@ -54,6 +54,22 @@ const handleLogout = async() => {
     console.error('Failed to log out', error)
   }
 }
+
+useEffect(() => {
+  const handleClose = () => {
+    // remplacez setIsOpen par le setter réel de votre Navbar si différent
+    try {
+      setIsOpen(false);
+    } catch (e) {
+      // si votre setter a un autre nom, remplacez la ligne ci‑dessus
+      // ou implémentez la fermeture du menu dans cette fonction
+    }
+  };
+
+  window.addEventListener('closeNavbar', handleClose);
+  return () => window.removeEventListener('closeNavbar', handleClose);
+}, []);
+
   return (
     <header className='fixed-nav-bar w-nav'> 
       <nav className='max-w-screen-2xl mx-auto px-4 flex justify-between items-center'>
