@@ -8,7 +8,9 @@ function App() {
   return (
     <>
       <Navbar/>
-      <Outlet/>
+      <main className="pt-16">  {/* 16 = la hauteur du Navbar (h-16) */}
+        <Outlet />
+      </main>
       <Footer/>
      
     </>
