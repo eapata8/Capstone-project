@@ -1,7 +1,7 @@
 // firebase.js
 const admin = require('firebase-admin');
-const serviceAccount = require('./serviceAccountKey.json'); // télécharge depuis Firebase Console
-
+require('dotenv').config(); // charge les variables depuis .env
+const serviceAccount =JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
