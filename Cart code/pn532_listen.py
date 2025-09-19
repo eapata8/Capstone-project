@@ -7,12 +7,13 @@ import time
 import board 
 import busio 
 from digitalio import DigitalInOut 
-import adafruit_pn532 
+from adafruit_pn532.spi import PN532_SPI
 
 # SPI pins (GPIO 8/9/10/11) 
 spi = busio.SPI(clock=board.SCK, MOSI=board.MOSI, MISO=board.MISO) 
 cs = DigitalInOut(board.D8)  # CE0 
-pn532 = adafruit_pn532.PN532_SPI(spi, cs, debug=False) 
+# Créer l'objet PN532 SPI
+pn532 = PN532_SPI(spi, cs, debug=False) 
 
 pn532.SAM_configuration()  # mode normal 
 
