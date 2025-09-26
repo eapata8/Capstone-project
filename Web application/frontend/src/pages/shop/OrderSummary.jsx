@@ -13,8 +13,8 @@ const OrderSummary = ({ onClose }) => {
     typeof selectedItems === 'number' ? selectedItems : 0
 
   const handleSendToCart = () => {
-    onClose?.();            // ✅ close the banner/drawer
-    navigate('/checkout');  // ✅ then go to checkout
+    onClose?.();           
+    navigate('/cart-navigation');  
   };
 
   return (

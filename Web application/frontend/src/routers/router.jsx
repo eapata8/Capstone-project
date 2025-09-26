@@ -9,6 +9,7 @@ import Login from "../components/Login";
 import Register from "../components/Register"; 
 import Checkout from '../pages/shop/Checkout';
 import OrderSuccess from '../pages/shop/OrderSuccess';
+import CartNavigationPage from "../pages/cartNavigationProcessing/CartNavigationPage";
 
 const router =createBrowserRouter([
 
@@ -51,6 +52,10 @@ const router =createBrowserRouter([
             {
                 path: "/order-success",
                 element: <OrderSuccess />
+            },
+            {
+                path: "/cart-navigation",
+                element: <CartNavigationPage />
             }
         ]
     }
