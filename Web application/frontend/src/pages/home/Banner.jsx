@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import bannerImg from "../../assets/supermarket1.png"
+import Type from '../../components/Type';
 
 const Banner = () => {
   return (
@@ -17,8 +18,8 @@ const Banner = () => {
       <div className="absolute inset-0 bg-white/80 pointer-events-none" />
 
       <div className="header__content relative z-20 max-w-3xl text-black px-6">
-        <h4 className="uppercase font-medium text-pink-600 tracking-wide">
-          Welcome to ChaseCart – Your Intelligent Shopping Assistant
+        <h4 className="uppercase font-medium text-pink-600 -tracking-normal">
+          <Type texts={["Welcome to ChaseCart – Your Intelligent Shopping Assistant"]} />
         </h4>
         <h1 className="text-5xl font-semibold mt-2">ChaseCart</h1>
         <p className="mt-4 text-medium text-gray-800 font-medium leading-relaxed">
