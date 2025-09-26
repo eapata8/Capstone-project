@@ -1,32 +1,50 @@
-const { Schema, model } = require('mongoose');
+const db = require('../firebase'); // Firestore
 const bcrypt = require('bcrypt');
 
-const userSchema = new Schema({
-    username: {type: String, required: true,unique: true},
-    email: {type: String, required: true,unique: true},
-    password: {type: String, required: true},
-    role: { type: String, default: 'user' },
-    profileImage: String,
-    bio:{type: String, maxlength:200},
-    profession: String,
-    createdAt:{
-        type: Date,
-        default: Date.now
+class UserModel {
+    constructor() {
+        this.collection = db.collection('users');
     }
-});
 
-// hashing passwords
-userSchema.pre('save', async function(next){
-    const user = this;
-    if(!user.isModified('password')) return next();
-    const hashedPassword = await bcrypt.hash(user.password, 10);
-    user.password = hashedPassword;
-    next();
-})
+    // Créer un nouvel utilisateur
+    async createUser({ username, email, password, role = 'user', profileImage = '', bio = '', profession = '' }) {
+        // Hash du mot de passe
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-//matching passwords
-userSchema.methods.comparePassword =  function(candidatePassword){
-    return bcrypt.compare(candidatePassword, this.password);
+        // Créer le document dans Firestore
+        const userRef = await this.collection.add({
+            username,
+            email,
+            password: hashedPassword,
+            role,
+            profileImage,
+            bio,
+            profession,
+            createdAt: new Date()
+        });
+
+        return { id: userRef.id, username, email, role };
+    }
+
+    // Récupérer un utilisateur par ID
+    async getUserById(userId) {
+        const doc = await this.collection.doc(userId).get();
+        if (!doc.exists) return null;
+        return { id: doc.id, ...doc.data() };
+    }
+
+    // Récupérer un utilisateur par email
+    async getUserByEmail(email) {
+        const snapshot = await this.collection.where('email', '==', email).get();
+        if (snapshot.empty) return null;
+        const doc = snapshot.docs[0];
+        return { id: doc.id, ...doc.data() };
+    }
+
+    // Vérifier le mot de passe
+    async comparePassword(candidatePassword, hashedPassword) {
+        return bcrypt.compare(candidatePassword, hashedPassword);
+    }
 }
-const User=new model('User',userSchema);
-module.exports=User;
+
+module.exports = new UserModel();

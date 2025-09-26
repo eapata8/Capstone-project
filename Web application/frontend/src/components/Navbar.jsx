@@ -5,6 +5,8 @@ import CartModal from '../pages/shop/CartModal';
 import avatarImg from '../assets/avatar.png';
 import { useLogoutUserMutation } from '../redux/features/auth/authApi';
 import { logout } from '../redux/features/auth/authSlice';
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 const Navbar = (props) => {
 
@@ -45,15 +47,15 @@ const userDropDownMenus = [
 ]
 const dropdownMenus = user?.role === 'admin' ? [...adminDropDownMenus] : [...userDropDownMenus];
 
-const handleLogout = async() => {
+const handleLogout = async () => {
   try {
-    await logoutUser().unwrap();
-    dispatch(logout())
-    navigate('/')
+    await signOut(auth);       // ✅ déconnexion Firebase
+    dispatch(logout());        // ✅ réinitialise Redux
+    navigate("/");             // ✅ redirige vers la home
   } catch (error) {
-    console.error('Failed to log out', error)
+    console.error("Erreur de déconnexion:", error);
   }
-}
+};
 
 useEffect(() => {
   const handleClose = () => {
