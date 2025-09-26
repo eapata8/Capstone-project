@@ -71,7 +71,7 @@ const handleLogout = async () => {
             <li className='link'><Link to="/">Home</Link></li>
             <li className='link'><Link to="/shop">Shop</Link></li>
             <li className='link'><Link to="/contact">Contact</Link></li>
-            <li className='link text-center'><Link to="/contact">Why ChaseCart?</Link></li>
+            <li className='link text-center'><Link to="/why_chasecart">Why ChaseCart?</Link></li>
           </ul>
         </div>
 

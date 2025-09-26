@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import cartImg from "../../assets/cart.png"; // your cart image
+import cartImg from "../../assets/cart.png"; 
+import Type from '../../components/Type';
 
 const CartNavigationPage = () => {
   const navigate = useNavigate();
@@ -17,8 +18,7 @@ const CartNavigationPage = () => {
           Your cart is on the move 🛒
         </h2>
         <p className="section__subheader text-lg text-gray-700 max-w-2xl mx-auto">
-          ChaseCart is collecting your items...  
-          Press the button when you're ready to checkout!
+          <Type texts={["ChaseCart is collecting your items...", "Press the button when you're ready to checkout!"]} />
         </p>
       </div>
 
@@ -37,7 +37,7 @@ const CartNavigationPage = () => {
           onClick={handleCheckout}
           className="bg-pink-500 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-600 transition duration-300"
         >
-          J’ai ramassé mes articles → Checkout
+          I'm done → Checkout
         </button>
       </div>
 
