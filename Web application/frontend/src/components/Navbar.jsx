@@ -57,37 +57,26 @@ const handleLogout = async () => {
   }
 };
 
-useEffect(() => {
-  const handleClose = () => {
-    // remplacez setIsOpen par le setter réel de votre Navbar si différent
-    try {
-      setIsOpen(false);
-    } catch (e) {
-      // si votre setter a un autre nom, remplacez la ligne ci‑dessus
-      // ou implémentez la fermeture du menu dans cette fonction
-    }
-  };
-
-  window.addEventListener('closeNavbar', handleClose);
-  return () => window.removeEventListener('closeNavbar', handleClose);
-}, []);
-
   return (
-    <header className='fixed inset-x-0 top-0 z-50 bg-white shadow'> 
-      <nav className='max-w-screen-2xl mx-auto px-4 flex justify-between items-center'>
-        <ul className='nav__links'>
-          <li className='link'><Link to="/">Home</Link></li> 
-          <li className='link'><Link to="/shop">Shop</Link></li> 
-          <li className='link'><Link to="/contact">Contact</Link></li> 
-        </ul>
-
-        {/*Logo*/}
-        <div className='nav__logo'>
-            <Link to="/">ChaseCart <span>.</span></Link>
+    <header className='fixed inset-x-0 top-0 z-50 bg-white shadow'>
+      <nav className="max-w-screen-2xl mx-auto px-4 h-25 grid grid-cols-3 items-center">
+        {/* Logo */}
+        <div className='nav__logo justify-self-start'>
+          <Link to="/">ChaseCart <span>.</span></Link>
         </div>
 
-        {/*Nav icons*/}
-        <div className='nav__icons relative'>
+        {/* Centered links */}
+        <div>
+          <ul className='nav__links relative left-1/2 transform -translate-x-1/2 flex space-x-6'>
+            <li className='link'><Link to="/">Home</Link></li>
+            <li className='link'><Link to="/shop">Shop</Link></li>
+            <li className='link'><Link to="/contact">Contact</Link></li>
+            <li className='link text-center'><Link to="/why_chasecart">Why ChaseCart?</Link></li>
+          </ul>
+        </div>
+
+        {/* Nav icons */}
+        <div className='nav__icons relative justify-self-end flex items-center gap-5'>
             {/*research bar icon*/}
            <span>
                 <Link to="/shop">

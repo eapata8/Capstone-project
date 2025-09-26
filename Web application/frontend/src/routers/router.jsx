@@ -9,6 +9,8 @@ import Login from "../components/Login";
 import Register from "../components/Register"; 
 import Checkout from '../pages/shop/Checkout';
 import OrderSuccess from '../pages/shop/OrderSuccess';
+import CartNavigationPage from "../pages/cartNavigationProcessing/CartNavigationPage";
+import WhyChaseCart from "../pages/why_chasecart/WhyChaseCart"; 
 
 const router =createBrowserRouter([
 
@@ -51,6 +53,14 @@ const router =createBrowserRouter([
             {
                 path: "/order-success",
                 element: <OrderSuccess />
+            },
+            {
+                path: "/why-chasecart",
+                element: <WhyChaseCart />
+            },
+            {
+                path: "/cart-navigation",
+                element: <CartNavigationPage />
             }
         ]
     }

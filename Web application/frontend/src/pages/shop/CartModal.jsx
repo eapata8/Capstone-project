@@ -127,7 +127,7 @@ const CartModal = ({ products = [], isOpen, onClose }) => {
           </div>
 
           {/* Calculation */}
-          {hasItems && <OrderSummary />}
+          {hasItems && <OrderSummary onClose={onClose}/>}
         </div>
       </div>
     </div>
