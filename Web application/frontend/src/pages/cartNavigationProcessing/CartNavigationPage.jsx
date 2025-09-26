@@ -1,58 +1,59 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import cartImg from "../../assets/cart.png"; // Assurez-vous d'avoir une image de cart dans ce chemin
-
+import cartImg from "../../assets/cart.png"; // your cart image
 
 const CartNavigationPage = () => {
   const navigate = useNavigate();
-  const [isMoving, setIsMoving] = useState(true);
 
   const handleCheckout = () => {
-    setIsMoving(false);
     navigate("/checkout");
   };
 
   return (
-    <section className="section__container bg-primary-light flex flex-col items-center justify-center h-screen text-center">
-      <h2 className="section__header capitalize text-2xl font-semibold mb-4">
-        Your cart is on the move 🛒
-      </h2>
-      <p className="section__subheader mb-6">
-        ChaseCart is collecting your items...  
-        Press the button when you're ready to checkout!
-      </p>
+    <section className="section__container bg-primary-light h-screen flex flex-col items-center justify-between text-center p-8 overflow-hidden">
+      {/* Text at top */}
+      <div>
+        <h2 className="section__header capitalize text-3xl font-bold mb-4">
+          Your cart is on the move 🛒
+        </h2>
+        <p className="section__subheader text-lg text-gray-700 max-w-2xl mx-auto">
+          ChaseCart is collecting your items...  
+          Press the button when you're ready to checkout!
+        </p>
+      </div>
 
-      {/* Animation du cart */}
-        <div className="relative w-full h-60 overflow-hidden">
+      {/* Animated cart image in center */}
+      <div className="flex-1 flex items-center justify-center relative w-full">
         <img
-            src={cartImg}
-            alt="Shopping cart"
-            className={`absolute left-0 bottom-0 w-48 h-48 object-contain ${
-            isMoving ? "animate-[moveCart_10s_linear_infinite]" : ""
-            }`}
+          src={cartImg}
+          alt="Shopping cart"
+          className="w-[400px] h-auto object-contain animate-moveCart"
         />
-        </div>
+      </div>
 
+      {/* Button at bottom */}
+      <div className="mb-10">
+        <button
+          onClick={handleCheckout}
+          className="bg-pink-500 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-600 transition duration-300"
+        >
+          J’ai ramassé mes articles → Checkout
+        </button>
+      </div>
 
-      {/* Bouton */}
-      <button
-        onClick={handleCheckout}
-        className="mt-10 bg-pink-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-600 transition duration-300"
-      >
-        J’ai ramassé mes articles → Checkout
-      </button>
-
-      {/* Animation keyframes */}
+      {/* Keyframes for cart animation */}
       <style>
         {`
           @keyframes moveCart {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(100vw); }
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+          }
+          .animate-moveCart {
+            animation: moveCart 6s linear infinite;
           }
         `}
       </style>
     </section>
-    
   );
 };
 
