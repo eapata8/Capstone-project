@@ -57,21 +57,6 @@ const handleLogout = async () => {
   }
 };
 
-useEffect(() => {
-  const handleClose = () => {
-    // remplacez setIsOpen par le setter réel de votre Navbar si différent
-    try {
-      setIsOpen(false);
-    } catch (e) {
-      // si votre setter a un autre nom, remplacez la ligne ci‑dessus
-      // ou implémentez la fermeture du menu dans cette fonction
-    }
-  };
-
-  window.addEventListener('closeNavbar', handleClose);
-  return () => window.removeEventListener('closeNavbar', handleClose);
-}, []);
-
   return (
     <header className='fixed inset-x-0 top-0 z-50 bg-white shadow'>
       <nav className="max-w-screen-2xl mx-auto px-4 h-25 grid grid-cols-3 items-center">
