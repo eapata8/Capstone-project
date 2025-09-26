@@ -12,10 +12,12 @@ const OrderSummary = ({ onClose }) => {
     Array.isArray(selectedItems) ? selectedItems.length :
     typeof selectedItems === 'number' ? selectedItems : 0
 
-  const handleSendToCart = () => {
+    const handleSendToCart = () => {
     onClose?.();           
+    window.scrollTo({ top: 0, behavior: "smooth" }); // 🔥 force le scroll en haut
     navigate('/cart-navigation');  
-  };
+    };
+
 
   return (
     <div className='bg-primary-light mt-5 rounded text-base shadow-lg p-6'>
