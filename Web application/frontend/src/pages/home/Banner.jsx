@@ -21,7 +21,7 @@ const Banner = () => {
         <h4 className="uppercase font-medium text-pink-600 -tracking-normal">
           <Type texts={["Welcome to ChaseCart – Your Intelligent Shopping Assistant"]} />
         </h4>
-        <h1 className="text-5xl font-semibold mt-2">ChaseCart</h1>
+        <h1 className="text-5xl font-semibold mt-2">ChaseCart<span style={{ color: "var(--primary-color)" }}>.</span></h1>
         <p className="mt-4 text-medium text-gray-800 font-medium leading-relaxed">
           Discover a smarter, faster way to shop. ChaseCart is here to guide you effortlessly to everything you need.
           Say goodbye to the hassle and hello to convenience.
